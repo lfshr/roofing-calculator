@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roof &amp; Joinery Calculator</title>
+  <meta name="description" content="Roofing (pitch, rafters, birdsmouth, hips, jacks) and joinery (dovetails, mortise and tenon, box joints, mitres) calculator with diagrams.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 22 L16 6 L30 22 Z' fill='%23b5651d'/%3E%3Crect x='6' y='22' width='20' height='6' fill='%23555'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <h1>Roof &amp; Joinery Calculator</h1>
+      <div class="unit-toggle" role="radiogroup" aria-label="Units">
+        <label><input type="radio" name="unit" value="mm" checked> mm</label>
+        <label><input type="radio" name="unit" value="in"> inches</label>
+      </div>
+    </div>
+    <nav class="wrap tabs" aria-label="Calculators">
+      <a href="#roof" data-tab="roof">Roofing</a>
+      <a href="#dovetail" data-tab="dovetail">Dovetails</a>
+      <a href="#mortise" data-tab="mortise">Mortise &amp; tenon</a>
+      <a href="#box" data-tab="box">Box joint</a>
+      <a href="#mitre" data-tab="mitre">Mitres</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <!-- ======================= ROOFING ======================= -->
+    <section id="tab-roof" class="calc" data-calc="roof">
+      <form class="inputs" autocomplete="off">
+        <h2>Roof</h2>
+        <p class="hint">Enter the pitch and the run. Everything else is optional and adds more figures.</p>
+        <div class="field pitch-field">
+          <label for="r-pitch">Pitch</label>
+          <div class="combo">
+            <input id="r-pitch" name="pitch" type="number" step="any" min="0" value="35">
+            <select name="pitchMode" aria-label="Pitch format">
+              <option value="degrees">degrees</option>
+              <option value="in12">in 12 (rise per 12)</option>
+              <option value="percent">percent</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="r-run">Run <span class="u"></span></label>
+          <input id="r-run" name="run" type="number" step="any" min="0" data-len data-mm="3000" data-in="120" value="3000">
+          <small>Horizontal: outside of the wall plate to the centre of the ridge (half the span).</small>
+        </div>
+        <details open>
+          <summary>Timber sizes and overhang</summary>
+          <div class="field"><label for="r-oh">Eaves overhang <span class="u"></span></label>
+            <input id="r-oh" name="overhang" type="number" step="any" min="0" data-len data-mm="300" data-in="12" value="300">
+            <small>Horizontal, beyond the outside of the wall plate.</small></div>
+          <div class="field"><label for="r-ridge">Ridge board thickness <span class="u"></span></label>
+            <input id="r-ridge" name="ridgeThickness" type="number" step="any" min="0" data-len data-mm="47" data-in="1.5" value="47"></div>
+          <div class="field"><label for="r-depth">Rafter depth <span class="u"></span></label>
+            <input id="r-depth" name="rafterDepth" type="number" step="any" min="0" data-len data-mm="150" data-in="7.25" value="150"></div>
+          <div class="field"><label for="r-seat">Birdsmouth seat length <span class="u"></span></label>
+            <input id="r-seat" name="seatLength" type="number" step="any" min="0" data-len data-mm="75" data-in="3.5" value="75">
+            <small>How far the rafter sits on the plate, measured level.</small></div>
+          <div class="field"><label for="r-hip">Hip / valley thickness <span class="u"></span></label>
+            <input id="r-hip" name="hipThickness" type="number" step="any" min="0" data-len data-mm="47" data-in="1.5" value="47"></div>
+          <div class="field"><label for="r-jack">Rafter spacing (centres) <span class="u"></span></label>
+            <input id="r-jack" name="jackSpacing" type="number" step="any" min="0" data-len data-mm="400" data-in="16" value="400"></div>
+        </details>
+      </form>
+      <div class="output" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================= DOVETAILS ======================= -->
+    <section id="tab-dovetail" class="calc" data-calc="dovetail" hidden>
+      <form class="inputs" autocomplete="off">
+        <h2>Through dovetails</h2>
+        <div class="field"><label for="d-w">Board width <span class="u"></span></label>
+          <input id="d-w" name="width" type="number" step="any" min="0" data-len data-mm="150" data-in="6" value="150"></div>
+        <div class="field"><label for="d-pt">Pin board thickness <span class="u"></span></label>
+          <input id="d-pt" name="pinBoardThickness" type="number" step="any" min="0" data-len data-mm="18" data-in="0.75" value="18">
+          <small>Sets the length of the tails.</small></div>
+        <div class="field"><label for="d-tt">Tail board thickness <span class="u"></span></label>
+          <input id="d-tt" name="tailBoardThickness" type="number" step="any" min="0" data-len data-mm="18" data-in="0.75" value="18">
+          <small>Sets the length of the pins.</small></div>
+        <div class="field"><label for="d-ratio">Slope</label>
+          <select id="d-ratio" name="ratio">
+            <option value="6">1:6 (softwood)</option>
+            <option value="7">1:7</option>
+            <option value="8" selected>1:8 (hardwood)</option>
+            <option value="5">1:5</option>
+            <option value="9">1:9</option>
+          </select></div>
+        <div class="field"><label for="d-n">Number of tails</label>
+          <input id="d-n" name="tails" type="number" step="1" min="1" value="4"></div>
+        <div class="field"><label for="d-pin">Pin width, narrow end <span class="u"></span></label>
+          <input id="d-pin" name="pinWidth" type="number" step="any" min="0" data-len data-mm="6" data-in="0.25" value="6"></div>
+        <div class="field"><label for="d-half">Half-pin width, narrow end <span class="u"></span></label>
+          <input id="d-half" name="halfPinWidth" type="number" step="any" min="0" data-len data-mm="8" data-in="0.3125" value="8"></div>
+      </form>
+      <div class="output" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================= MORTISE & TENON ======================= -->
+    <section id="tab-mortise" class="calc" data-calc="mortise" hidden>
+      <form class="inputs" autocomplete="off">
+        <h2>Mortise &amp; tenon</h2>
+        <div class="field"><label for="m-t">Rail thickness <span class="u"></span></label>
+          <input id="m-t" name="railThickness" type="number" step="any" min="0" data-len data-mm="21" data-in="0.875" value="21"></div>
+        <div class="field"><label for="m-w">Rail width <span class="u"></span></label>
+          <input id="m-w" name="railWidth" type="number" step="any" min="0" data-len data-mm="70" data-in="2.75" value="70"></div>
+        <div class="field"><label for="m-s">Stile width (mortised piece) <span class="u"></span></label>
+          <input id="m-s" name="stileWidth" type="number" step="any" min="0" data-len data-mm="70" data-in="2.75" value="70"></div>
+        <div class="field"><label for="m-e">Edge shoulder <span class="u"></span></label>
+          <input id="m-e" name="edgeShoulder" type="number" step="any" min="0" data-len data-mm="10" data-in="0.375" value="10">
+          <small>Taken off each edge of the tenon's width.</small></div>
+        <div class="field check"><label><input name="through" type="checkbox"> Through tenon</label></div>
+      </form>
+      <div class="output" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================= BOX JOINT ======================= -->
+    <section id="tab-box" class="calc" data-calc="box" hidden>
+      <form class="inputs" autocomplete="off">
+        <h2>Box (finger) joint</h2>
+        <div class="field"><label for="b-w">Board width <span class="u"></span></label>
+          <input id="b-w" name="width" type="number" step="any" min="0" data-len data-mm="120" data-in="4.5" value="120"></div>
+        <div class="field"><label for="b-f">Target finger width <span class="u"></span></label>
+          <input id="b-f" name="targetFinger" type="number" step="any" min="0" data-len data-mm="12" data-in="0.5" value="12"></div>
+        <div class="field"><label for="b-t">Board thickness <span class="u"></span></label>
+          <input id="b-t" name="thickness" type="number" step="any" min="0" data-len data-mm="12" data-in="0.5" value="12"></div>
+      </form>
+      <div class="output" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================= MITRES ======================= -->
+    <section id="tab-mitre" class="calc" data-calc="mitre" hidden>
+      <form class="inputs" autocomplete="off">
+        <h2>Mitres &amp; compound mitres</h2>
+        <div class="field"><label for="x-n">Number of sides</label>
+          <input id="x-n" name="sides" type="number" step="1" min="3" value="4"></div>
+        <div class="field"><label for="x-s">Side angle from horizontal</label>
+          <input id="x-s" name="slopeDeg" type="number" step="any" min="0" max="90" value="0">
+          <small>0° = flat picture frame. 90° = upright box. In between = splayed box, hopper or crown.</small></div>
+      </form>
+      <div class="output" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="wrap site-footer">
+    <p>Check every figure against your drawings and local building regulations before cutting. Runs entirely in your browser.</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
